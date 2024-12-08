@@ -46,6 +46,17 @@ queue:pop()
 queue:peek()
 ```
 
+## XML
+
+Single file merge of [SLAXML](https://github.com/Phrogz/SLAXML) with type
+annotations. For the output format, check
+[DOM Table Features](https://github.com/Phrogz/SLAXML?tab=readme-ov-file#dom-table-features)
+
+```lua
+local t = XML:dom('<test attr="5">value</test>')
+local s = XML:xml(t)
+```
+
 ## WeightedList
 
 A list with weighted entries, for cases where simple `table.choices` or

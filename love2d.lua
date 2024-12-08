@@ -1,3 +1,6 @@
+---@type string
+local root = ...
+
 ---Recursively delete files
 ---@param item string
 function love.filesystem.removeRecursive(item)
@@ -48,4 +51,59 @@ function love.filesystem.copyFile(source, target)
 	targetSize = targetFile:seek("end")
 	targetFile:close()
 	return targetSize == sourceSize
+end
+
+---@class ORAImage
+---@field images table<string, ORAImageLayer>
+
+---@class ORAImageLayer
+---@field x number
+---@field y number
+---@field opacity number
+---@field visible boolean
+---@field compositeOp string
+---@field image love.Image
+---@field imageData love.ImageData
+
+---Load an ORA image
+---@param path string
+---@return ORAImage
+function love.graphics.newORAImage(path)
+	local fileData = love.filesystem.newFileData(path)
+	assert(fileData, "File not found: " .. path)
+	assert(love.filesystem.mount(fileData, path .. "_mounted"), "Failed to mount " .. path)
+	local meta = love.filesystem.read(path .. "_mounted/stack.xml")
+
+	---@type SLAXML
+	local XML = require(root:sub(1, -7) .. ".xml")
+	local t = XML:dom(meta)
+
+	---@type ORAImage
+	local oraImage = {
+		images = {}
+	}
+	for _, image in ipairs(t.kids) do
+		if image.type == "element" then
+			for _, stack in ipairs(image.kids) do
+				if stack.type == "element" then
+					for _, layer in ipairs(stack.kids) do
+						if layer.type == "element" then
+							local imageData = love.image.newImageData(path .. "_mounted/" .. layer.attr["src"])
+							oraImage.images[tostring(layer.attr["name"])] = {
+								x = tonumber(layer.attr["x"]) or 0,
+								y = tonumber(layer.attr["y"]) or 0,
+								opacity = tonumber(layer.attr["opacity"]) or 1,
+								visible = layer.attr["visibility"] == "visible",
+								compositeOp = layer.attr["composite-op"] or "svg:source-over",
+								image = love.graphics.newImage(imageData),
+								imageData = imageData
+							}
+						end
+					end
+				end
+			end
+		end
+	end
+
+	return oraImage
 end
