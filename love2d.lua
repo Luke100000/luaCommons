@@ -1,5 +1,9 @@
----@type string
-local root = ...
+---@return string
+local function getRoot()
+    local str = debug.getinfo(2, "S").source
+    return str:match("(.*[/\\])") or ""
+end
+local root = getRoot()
 
 ---Recursively delete files
 ---@param item string
@@ -75,7 +79,7 @@ function love.graphics.newORAImage(path)
 	local meta = love.filesystem.read(path .. "_mounted/stack.xml")
 
 	---@type SLAXML
-	local XML = require(root:sub(1, -7) .. ".xml")
+	local XML = require(root .. ".xml")
 	local t = XML:dom(meta)
 
 	---@type ORAImage
