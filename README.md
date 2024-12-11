@@ -8,17 +8,11 @@ Require the module to install all base functions:
 require("luaCommons")
 ```
 
-## String
+## Commons
 
-`string.lua`
+`string.lua`, `table.lua`, `math.lua`
 
-## Table
-
-`table.lua`
-
-## Math
-
-`math.lua`
+Many helpful functions, from string.split to table.copy.
 
 ## Love2d
 
@@ -55,6 +49,17 @@ annotations. For the output format, check
 ```lua
 local t = XML:dom('<test attr="5">value</test>')
 local s = XML:xml(t)
+```
+
+## Json
+
+[Rxi's json.lua](https://github.com/rxi/json.lua)
+[optimized by appgurueu](https://github.com/rxi/json.lua/pull/46) and typed by
+me.
+
+```lua
+local s = Json.encode({a = 1, b = 2, c = 3})
+local t = Json.decode(s)
 ```
 
 ## WeightedList
