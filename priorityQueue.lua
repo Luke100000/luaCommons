@@ -15,7 +15,8 @@ License: zlib
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
-]] --
+]]
+--
 
 -- modified by xxopxe@gmail.com, flattening the heap into two arrays to improve performance
 -- modified by jonas.peche@aon.at, adding LLS annotations
@@ -127,11 +128,8 @@ function PriorityQueue:peek()
 	return self.heap_val[1], self.heap_pri[1]
 end
 
-setmetatable(
-	PriorityQueue,
-	{
-		__call = PriorityQueue.new
-	}
-)
+setmetatable(PriorityQueue, {
+	__call = PriorityQueue.new,
+})
 
 return PriorityQueue
