@@ -553,3 +553,36 @@ function table.unzip(t)
 		end
 	end
 end
+
+---Flattens the first dimension
+---@generic T
+---@param t T[][]
+---@return T[]
+function table.flatten(t)
+	local n = {}
+	for st in table.values(t) do
+		---@diagnostic disable-next-line: no-unknown
+		for _, v in ipairs(st) do
+			table.insert(n, v)
+		end
+	end
+	return n
+end
+
+---Expands the first dimension
+---@generic T
+---@param t T[]
+---@param size integer
+---@return T[][]
+function table.expand(t, size)
+	assert(#t % size == 0, "Cannot expand unevenly")
+	local n = {}
+	for i = 1, #t, n do
+		local st = {}
+		for j = 1, size do
+			table.insert(st, t[i + j - 1])
+		end
+		table.insert(n, st)
+	end
+	return n
+end

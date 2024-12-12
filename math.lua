@@ -29,3 +29,13 @@ end
 function math.sign(v)
 	return v > 0 and 1 or v < 0 and -1 or 0
 end
+
+---Checks if two values are close
+---@param a number
+---@param b number
+---@param rel_tol number?
+---@param abs_tol number?
+---@return boolean
+function math.close(a, b, rel_tol, abs_tol)
+	return math.abs(a - b) < ((abs_tol or 1e-9) + rel_tol * math.max(math.abs(a), math.abs(b)))
+end
