@@ -30,6 +30,22 @@ function math.sign(v)
 	return v > 0 and 1 or v < 0 and -1 or 0
 end
 
+---@param x number
+---@param y number
+---@return number
+function math.length(x, y)
+	return math.sqrt(x * x + y * y)
+end
+
+---@param x1 number
+---@param y1 number
+---@param x2 number
+---@param y2 number
+---@return number
+function math.distance(x1, y1, x2, y2)
+	return math.length(x2 - x1, y2 - y1)
+end
+
 ---Checks if two values are close
 ---@param a number
 ---@param b number

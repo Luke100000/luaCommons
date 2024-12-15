@@ -23,7 +23,7 @@ License: zlib
 
 local floor = math.floor
 
----@class PriorityQueue<T> : { empty: (fun(self: PriorityQueue<T>):boolean), size: (fun(self: PriorityQueue<T>):number), put: fun(self: PriorityQueue<T>, v: T, p: number), pop: (fun(self: PriorityQueue<T>):T), peek: (fun(self: PriorityQueue<T>):T) }
+---@class PriorityQueue<T> : { empty: (fun(self: PriorityQueue<T>):boolean), size: (fun(self: PriorityQueue<T>):number), put: fun(self: PriorityQueue<T>, v: T, p: number), pop: (fun(self: PriorityQueue<T>):(T, number)), peek: (fun(self: PriorityQueue<T>):T) }
 ---@field private heap_val any[]
 ---@field private heap_pri number[]
 ---@field private current_size number

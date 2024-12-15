@@ -35,9 +35,7 @@ function clazz:new(...)
 	return instance
 end
 
-function clazz:init(...)
-
-end
+function clazz:init(...) end
 
 local function initProxy(self, name, value)
 	if name == "new" then
@@ -47,8 +45,8 @@ local function initProxy(self, name, value)
 	end
 end
 
-local inheritedMetaMethods = { "__add", "__sub", "__mul", "__div", "__mod", "__unm", "__concat", "__eq", "__lt", "__le",
-	"__tostring" }
+local inheritedMetaMethods =
+	{ "__add", "__sub", "__mul", "__div", "__mod", "__unm", "__concat", "__eq", "__lt", "__le", "__tostring" }
 
 ---Extends that class and returns a child class
 ---@return Clazz
@@ -56,6 +54,7 @@ function clazz:extend()
 	assert(self:isClass(), "Can not extend an instance.")
 
 	---@type Clazz
+	---@diagnostic disable-next-line: missing-fields
 	local c = {
 		__super = self,
 		__instances = setmetatable({}, { __mode = "k" }),
@@ -80,7 +79,7 @@ function clazz:extend()
 		__call = self.new,
 		__tostring = self.__class__tostring,
 		__index = self,
-		__newindex = initProxy
+		__newindex = initProxy,
 	})
 end
 
@@ -110,10 +109,15 @@ local function __newindex_lock(self, key, value)
 		rawset(self, key, value)
 	else
 		error(
-			"Attempt to set field '" ..
-			tostring(key) ..
-			"' with value '" .. tostring(value) .. "' of a locked " .. (self:isClass() and "class" or "instance") .. ".",
-			2)
+			"Attempt to set field '"
+				.. tostring(key)
+				.. "' with value '"
+				.. tostring(value)
+				.. "' of a locked "
+				.. (self:isClass() and "class" or "instance")
+				.. ".",
+			2
+		)
 	end
 end
 
@@ -152,5 +156,5 @@ end
 ---@diagnostic disable-next-line: param-type-mismatch
 return setmetatable(clazz, {
 	__call = clazz.extend,
-	__tostring = clazz.__class__tostring
+	__tostring = clazz.__class__tostring,
 })
