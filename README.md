@@ -12,7 +12,7 @@ require("luaCommons")
 
 `string.lua`, `table.lua`, `math.lua`
 
-Many helpful functions, from string.split to table.copy.
+Many helpful functions, from `string.split` to `table.copy`.
 
 ## Love2d
 
@@ -112,5 +112,3 @@ local instance = Vehicle:new()
 
 instance:instanceOf(Clazz1)
 ```
-
-super() can be added like constructor injection
